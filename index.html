@@ -1,204 +1,237 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Gomes Rangel / GR</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Gomes Rangel / GR</title>
 
-  <!-- Google Fonts -->
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+<!-- Google Fonts -->
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
 
-  <!-- Font Awesome -->
-  <script src="https://kit.fontawesome.com/a81368914c.js" crossorigin="anonymous"></script>
+<!-- Font Awesome -->
+<script src="https://kit.fontawesome.com/a81368914c.js" crossorigin="anonymous"></script>
 
-  <!-- CSS -->
-  <style>
-    * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Poppins', sans-serif; }
-    body { overflow-x: hidden; background: #111; color: #fff; }
+<!-- CSS -->
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:'Poppins',sans-serif;}
+body{overflow-x:hidden;background:#111;color:#fff;perspective:1000px;}
 
-    /* Header */
-    header {
-      position: fixed;
-      top: 0;
-      width: 100%;
-      z-index: 100;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 20px 50px;
-      background: rgba(0,0,0,0.5);
-      backdrop-filter: blur(10px);
-      transition: all 0.5s ease;
-    }
-    header.scrolled { background: rgba(0,0,0,0.8); padding: 10px 50px; }
-    header .logo { font-size: 2em; font-weight: 700; color: #ff6700; }
-    header nav a {
-      margin-left: 30px;
-      text-decoration: none;
-      color: #fff;
-      font-weight: 500;
-      transition: 0.3s;
-    }
-    header nav a:hover { color: #ff6700; }
+/* Partículas */
+#particles-js{position:fixed;width:100%;height:100%;top:0;left:0;z-index:0;}
 
-    /* Hero Section */
-    .hero {
-      height: 100vh;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      text-align: center;
-      background: url('https://images.unsplash.com/photo-1551218808-94e220e084d2?auto=format&fit=crop&w=1950&q=80') center/cover no-repeat fixed;
-      position: relative;
-      color: #fff;
-    }
-    .hero::after {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background: rgba(0,0,0,0.4);
-    }
-    .hero-content {
-      position: relative;
-      z-index: 2;
-      animation: fadeInUp 2s ease forwards;
-    }
-    .hero-content h1 { font-size: 4em; margin-bottom: 20px; text-shadow: 2px 2px 10px #000; }
-    .hero-content p { font-size: 1.5em; }
+/* Header */
+header{
+  position:fixed;
+  top:0;
+  width:100%;
+  z-index:200;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  padding:20px 50px;
+  background:rgba(0,0,0,0.5);
+  backdrop-filter:blur(10px);
+  transition:all 0.5s ease;
+}
+header.scrolled{background:rgba(0,0,0,0.85);padding:10px 50px;}
+header .logo{font-size:2em;font-weight:700;color:#ff6700;letter-spacing:2px;text-shadow:0 0 20px #ff6700;}
+nav{display:flex;gap:30px;}
+nav a{position:relative;overflow:hidden;display:inline-block;}
+nav a span{display:inline-block;transition:transform 0.5s ease,color 0.3s ease; color:#ff6700;}
+nav a:hover span{transform:translateY(-100%);color:#0084ff;}
 
-    @keyframes fadeInUp {
-      0% { opacity: 0; transform: translateY(50px); }
-      100% { opacity: 1; transform: translateY(0); }
-    }
+/* Menu icon */
+.menu-icon{display:none;flex-direction:column;cursor:pointer;z-index:200;transition:transform 0.5s ease;}
+.menu-icon span{height:3px;width:25px;background:#fff;margin:4px 0;border-radius:3px;transition: all 0.5s ease;}
+.menu-icon:hover{transform:rotate(90deg);}
+@media(max-width:900px){.menu-icon{display:flex;}nav{position:fixed;top:0;right:-100%;height:100vh;width:250px;background:#111;flex-direction:column;justify-content:center;align-items:center;gap:40px;transition:0.5s;}nav.active{right:0;}nav a{font-size:1.5em;}}
 
-    /* Sobre */
-    .sobre {
-      min-height: 100vh;
-      display: flex;
-      align-items: center;
-      justify-content: space-around;
-      padding: 100px 50px;
-      background: #1c1c1c;
-    }
-    .sobre img { width: 45%; border-radius: 20px; transform: scale(0.9); transition: 0.5s ease; }
-    .sobre img:hover { transform: scale(1); }
-    .sobre-text { width: 45%; }
-    .sobre-text h2 { font-size: 2.5em; margin-bottom: 20px; color: #ff6700; }
-    .sobre-text p { font-size: 1.2em; line-height: 1.8; }
+/* Hero com parallax multilayer */
+.hero{
+  height:100vh;
+  position:relative;
+  overflow:hidden;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  text-align:center;
+  color:#fff;
+}
+.hero-layer{
+  position:absolute;
+  width:110%;
+  height:110%;
+  background-size:cover;
+  background-position:center;
+  top:-5%;
+  left:-5%;
+  transition:transform 0.1s;
+}
+.hero-layer.layer1{background:url('https://images.unsplash.com/photo-1551218808-94e220e084d2?auto=format&fit=crop&w=1950&q=80') center/cover no-repeat; z-index:1;}
+.hero-content{
+  position:relative;
+  z-index:3;
+  animation:fadeInUp 2s ease forwards;
+}
+.hero-content h1{
+  font-size:4em;
+  margin-bottom:20px;
+  text-shadow:0 0 20px #ff6700,0 0 40px #ff6700 inset;
+  animation:textGlow 2s infinite alternate;
+}
+.hero-content p{
+  font-size:1.5em;
+  text-shadow:0 0 15px #ff6700;
+}
 
-    /* Cardápio */
-    .cardapio {
-      padding: 100px 50px;
-      background: linear-gradient(135deg, #111, #222);
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-      gap: 30px;
-    }
-    .cardapio-item {
-      background: #1c1c1c;
-      border-radius: 20px;
-      padding: 20px;
-      text-align: center;
-      transition: 0.5s ease;
-      transform: perspective(1000px) rotateY(0deg);
-    }
-    .cardapio-item:hover {
-      transform: perspective(1000px) rotateY(15deg) scale(1.1);
-      box-shadow: 0 0 20px #ff6700;
-    }
-    .cardapio-item img { width: 100%; border-radius: 20px; margin-bottom: 15px; }
-    .cardapio-item h3 { color: #ff6700; margin-bottom: 10px; }
-    .cardapio-item p { font-size: 1em; color: #ccc; }
+/* Sobre */
+.sobre{
+  min-height:100vh;
+  display:flex;
+  align-items:center;
+  justify-content:space-around;
+  padding:100px 50px;
+  background:#1c1c1c;
+  position:relative;
+  overflow:hidden;
+}
+.sobre img{width:45%;border-radius:20px;transform:scale(0.9);transition:0.5s ease;box-shadow:0 0 20px #ff6700;}
+.sobre img:hover{transform:scale(1) rotate(-2deg);}
+.sobre-text{width:45%;}
+.sobre-text h2{font-size:2.5em;margin-bottom:20px;color:#ff6700;text-shadow:0 0 20px #ff6700;}
+.sobre-text p{font-size:1.2em;line-height:1.8;}
 
-    /* Galeria */
-    .galeria {
-      padding: 100px 50px;
-      display: flex;
-      gap: 30px;
-      overflow-x: auto;
-      scroll-snap-type: x mandatory;
-    }
-    .galeria img {
-      width: 400px;
-      border-radius: 20px;
-      flex-shrink: 0;
-      scroll-snap-align: center;
-      transition: transform 0.5s ease;
-    }
-    .galeria img:hover { transform: scale(1.2) rotate(5deg); }
+/* Cardápio 3D interativo */
+.cardapio{
+  padding:100px 50px;
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+  gap:30px;
+  background:linear-gradient(135deg,#111,#222);
+}
+.cardapio-item{
+  background:#1c1c1c;
+  border-radius:20px;
+  padding:20px;
+  text-align:center;
+  transition:transform 0.3s ease, box-shadow 0.3s ease;
+  transform-style:preserve-3d;
+  cursor:pointer;
+  box-shadow:0 0 20px #000 inset;
+}
+.cardapio-item:hover{
+  transform:rotateY(15deg) rotateX(5deg) scale(1.1);
+  box-shadow:0 0 50px #ff6700,0 0 80px #ff6700 inset;
+}
+.cardapio-item img{width:100%;border-radius:20px;margin-bottom:15px;transition:0.5s;}
+.cardapio-item img:hover{transform:scale(1.05);}
+.cardapio-item h3{color:#ff6700;margin-bottom:10px;}
+.cardapio-item p{font-size:1em;color:#ccc;}
 
-    /* Contato */
-    .contato {
-      padding: 100px 50px;
-      background: #111;
-      display: flex;
-      justify-content: space-around;
-      flex-wrap: wrap;
-      gap: 50px;
-    }
-    .contato-form {
-      background: #1c1c1c;
-      padding: 30px;
-      border-radius: 20px;
-      flex: 1;
-      min-width: 300px;
-    }
-    .contato-form h2 { color: #ff6700; margin-bottom: 20px; }
-    .contato-form input, .contato-form textarea {
-      width: 100%;
-      padding: 15px;
-      margin-bottom: 20px;
-      border-radius: 10px;
-      border: none;
-      background: #222;
-      color: #fff;
-      font-size: 1em;
-    }
-    .contato-form button {
-      padding: 15px 30px;
-      border: none;
-      border-radius: 10px;
-      background: #ff6700;
-      color: #fff;
-      font-size: 1em;
-      cursor: pointer;
-      transition: 0.3s;
-    }
-    .contato-form button:hover { background: #fff; color: #ff6700; }
+/* Galeria 3D */
+.galeria{
+  padding:100px 50px;
+  display:flex;
+  gap:30px;
+  overflow-x:auto;
+  scroll-snap-type:x mandatory;
+  perspective:1500px;
+}
+.galeria img{
+  width:400px;
+  border-radius:20px;
+  flex-shrink:0;
+  scroll-snap-align:center;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  box-shadow:0 0 20px #000;
+}
+.galeria img:hover{
+  transform:rotateY(15deg) rotateX(10deg) scale(1.2);
+  box-shadow:0 0 60px #ff6700;
+}
 
-    /* Rodapé */
-    footer {
-      padding: 50px;
-      text-align: center;
-      background: #111;
-    }
-    footer p { color: #777; }
-    footer .socials a {
-      margin: 0 10px;
-      color: #ff6700;
-      font-size: 1.5em;
-      transition: 0.3s;
-    }
-    footer .socials a:hover { color: #fff; }
+/* Contato futurista */
+.contato{
+  padding:100px 50px;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  background:linear-gradient(135deg,#111,#1a1a1a);
+  position:relative;
+  overflow:hidden;
+}
 
-    /* Scroll Animation */
-    .fadeIn { opacity: 0; transform: translateY(50px); transition: 1s ease; }
-    .fadeIn.visible { opacity: 1; transform: translateY(0); }
-  </style>
+@keyframes rotateBG{0%{transform:rotate(0deg);}100%{transform:rotate(360deg);}}
+
+
+.contato-form h2{
+  color:#ff6700;
+  text-align:center;
+  margin-bottom:30px;
+  font-size:2em;
+  text-shadow:0 0 25px #ff6700;
+  animation:textGlow 2s infinite alternate;
+}
+.contato-form input,
+.contato-form textarea{
+  width:100%;
+  padding:15px;
+  margin-bottom:20px;
+  border-radius:15px;
+  border:none;
+  background:#222;
+  color:#fff;
+  font-size:1em;
+  transition:0.3s;
+  box-shadow:0 0 15px #000 inset;
+}
+.contato-form input:focus,
+.contato-form textarea:focus{
+  outline:none;
+  box-shadow:0 0 25px #ff6700;
+  transform:scale(1.02);
+}
+.contato-form button{
+  width:100%;
+  padding:15px;
+  border:none;
+  border-radius:15px;
+  background:#ff6700;
+  color:#fff;
+  font-size:1.2em;
+  cursor:pointer;
+  transition:0.5s;
+  box-shadow:0 0 30px #ff6700,0 0 60px #ff6700 inset;
+  text-transform:uppercase;
+}
+.contato-form button:hover{
+  background:#111;
+  color:#ff6700;
+  box-shadow:0 0 70px #ff6700,0 0 150px #ff6700 inset;
+  transform:scale(1.05);
+}
+
+/* Rodapé */
+footer{
+  padding:50px;text-align:center;background:#111;
+}
+footer p{color:#777;}
+footer .socials a{margin:0 10px;color:#ff6700;font-size:1.5em;transition:0.3s;}
+footer .socials a:hover{color:#fff;}
+
+/* Scroll Animation */
+.fadeIn{opacity:0;transform:translateY(50px);transition:1s ease;}
+.fadeIn.visible{opacity:1;transform:translateY(0);}
+</style>
 </head>
 <body>
 
- <!-- Header com menu atualizado -->
+<!-- Partículas -->
+<div id="particles-js"></div>
+
 <header id="header">
   <div class="logo">GR</div>
-  
-  <!-- Menu icon -->
-  <div class="menu-icon" id="menu-icon">
-    <span></span>
-    <span></span>
-    <span></span>
-  </div>
-
+  <div class="menu-icon" id="menu-icon"><span></span><span></span><span></span></div>
   <nav id="nav-menu">
     <a href="#sobre"><span>Sobre</span></a>
     <a href="#cardapio"><span>Cardápio</span></a>
@@ -207,240 +240,123 @@
   </nav>
 </header>
 
-<style>
-/* Menu icon */
-.menu-icon {
-  display: none;
-  flex-direction: column;
-  cursor: pointer;
-  z-index: 200;
-  transition: transform 0.5s ease;
-}
-.menu-icon span {
-  height: 3px;
-  width: 25px;
-  background: #fff;
-  margin: 4px 0;
-  border-radius: 3px;
-  transition: all 0.5s ease;
-}
-.menu-icon:hover {
-  transform: rotate(90deg);
-}
+<section class="hero">
+  <div class="hero-layer layer1"></div>
+  <div class="hero-layer layer2"></div>
+  <div class="hero-content">
+    <h1>Gomes Rangel</h1>
+    <p>Uma experiência gastronômica surreal</p>
+  </div>
+</section>
 
-/* Nav menu desktop */
-nav {
-  display: flex;
-  gap: 30px;
-}
-nav a {
-  position: relative;
-  overflow: hidden;
-  display: inline-block;
-}
-nav a span {
-  display: inline-block;
-  transition: transform 0.5s ease, color 0.3s ease;
-}
-nav a:hover span {
-  transform: translateY(-100%);
-  color: #ff6700;
-}
+<section class="sobre" id="sobre">
+  <img src="https://images.unsplash.com/photo-1555992336-03a23c8d5e82?auto=format&fit=crop&w=800&q=80" alt="Restaurante">
+  <div class="sobre-text fadeIn">
+    <h2>Sobre Nós</h2>
+    <p>O Restaurante Gomes Rangel oferece uma experiência gastronômica única com pratos criativos e ambiente futurista. Venha sentir o sabor da inovação!</p>
+  </div>
+</section>
 
-/* Mobile */
-@media (max-width: 900px) {
-  .menu-icon { display: flex; }
+<section class="cardapio" id="cardapio">
+  <div class="cardapio-item">
+    <img src="https://images.unsplash.com/photo-1600891964599-f61ba0e24092?auto=format&fit=crop&w=400&q=80" alt="">
+    <h3>Prato 1</h3>
+    <p>Descrição do prato incrível e saboroso.</p>
+  </div>
+  <div class="cardapio-item">
+    <img src="https://images.unsplash.com/photo-1598514982913-04398e3a2b06?auto=format&fit=crop&w=400&q=80" alt="">
+    <h3>Prato 2</h3>
+    <p>Uma explosão de sabores em cada mordida.</p>
+  </div>
+  <div class="cardapio-item">
+    <img src="https://images.unsplash.com/photo-1543352634-8f3d48585c9e?auto=format&fit=crop&w=400&q=80" alt="">
+    <h3>Prato 3</h3>
+    <p>Experiência gastronômica inesquecível.</p>
+  </div>
+</section>
 
-  nav {
-    position: fixed;
-    top: 0;
-    right: -100%;
-    height: 100vh;
-    width: 250px;
-    background: #111;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    gap: 40px;
-    transition: 0.5s;
-  }
+<section class="galeria" id="galeria">
+  <img src="https://images.unsplash.com/photo-1504674900247-0877df9cc836?auto=format&fit=crop&w=800&q=80" alt="">
+  <img src="https://images.unsplash.com/photo-1529692236671-f1a7466d1952?auto=format&fit=crop&w=800&q=80" alt="">
+  <img src="https://images.unsplash.com/photo-1504674900247-0877df9cc836?auto=format&fit=crop&w=800&q=80" alt="">
+</section>
 
-  nav.active {
-    right: 0;
-  }
+<section class="contato" id="contato">
+  <div class="contato-form fadeIn">
+    <h2>Faça sua Reserva</h2>
+    <input type="text" placeholder="Seu Nome">
+    <input type="email" placeholder="Seu Email">
+    <input type="tel" placeholder="Telefone">
+    <textarea rows="4" placeholder="Mensagem"></textarea>
+    <button>Enviar</button>
+  </div>
+</section>
 
-  nav a {
-    font-size: 1.5em;
-  }
-}
+<footer>
+  <p>© 2025 Gomes Rangel</p>
+  <div class="socials">
+    <a href="#"><i class="fab fa-facebook-f"></i></a>
+    <a href="#"><i class="fab fa-instagram"></i></a>
+    <a href="#"><i class="fab fa-twitter"></i></a>
+  </div>
+</footer>
 
-/* Contato futurista */
-.contato {
-  padding: 100px 50px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background: linear-gradient(135deg, #111, #1a1a1a);
-  position: relative;
-  overflow: hidden;
-}
-
-
-
-@keyframes rotateBG {
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
-}
-
-
-
-.contato-form h2 {
-  color: #ff6700;
-  text-align: center;
-  margin-bottom: 30px;
-  font-size: 2em;
-  text-shadow: 0 0 10px #ff6700;
-}
-
-.contato-form input,
-.contato-form textarea {
-  width: 100%;
-  padding: 15px;
-  margin-bottom: 20px;
-  border-radius: 15px;
-  border: none;
-  background: #222;
-  color: #fff;
-  font-size: 1em;
-  transition: 0.3s;
-  box-shadow: 0 0 10px #000 inset;
-}
-.contato-form input:focus,
-.contato-form textarea:focus {
-  outline: none;
-  box-shadow: 0 0 15px #ff6700;
-  transform: scale(1.02);
-}
-
-.contato-form button {
-  width: 100%;
-  padding: 15px;
-  border: none;
-  border-radius: 15px;
-  background: #ff6700;
-  color: #fff;
-  font-size: 1.2em;
-  cursor: pointer;
-  transition: 0.5s;
-  box-shadow: 0 0 20px #ff6700, 0 0 40px #ff6700 inset;
-  text-transform: uppercase;
-}
-.contato-form button:hover {
-  background: #111;
-  color: #ff6700;
-  box-shadow: 0 0 40px #ff6700, 0 0 80px #ff6700 inset;
-  transform: scale(1.05);
-}
-</style>
-
+<!-- Scripts -->
+<script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
 <script>
-// Menu toggle
-const menuIcon = document.getElementById('menu-icon');
-const navMenu = document.getElementById('nav-menu');
+particlesJS("particles-js", {
+  "particles": {
+    "number": {"value":80,"density":{"enable":true,"value_area":800}},
+    "color":{"value":"#ff6700"},
+    "shape":{"type":"circle"},
+    "opacity":{"value":0.5,"random":true,"anim":{"enable":true,"speed":1,"opacity_min":0.1,"sync":false}},
+    "size":{"value":3,"random":true},
+    "line_linked":{"enable":true,"distance":150,"color":"#ff6700","opacity":0.3,"width":1},
+    "move":{"enable":true,"speed":2,"direction":"none","random":false,"straight":false,"out_mode":"out"}
+  },
+  "interactivity":{"detect_on":"canvas","events":{"onhover":{"enable":true,"mode":"repulse"}},"modes":{"repulse":{"distance":100,"duration":0.4}}}
+});
 
-menuIcon.addEventListener('click', () => {
-  navMenu.classList.toggle('active');
+/* Menu toggle */
+const menuIcon=document.getElementById('menu-icon');
+const navMenu=document.getElementById('nav-menu');
+menuIcon.addEventListener('click',()=>navMenu.classList.toggle('active'));
+
+/* Header Scroll */
+const header=document.getElementById('header');
+window.addEventListener('scroll',()=>{if(window.scrollY>50) header.classList.add('scrolled'); else header.classList.remove('scrolled');});
+
+/* Scroll FadeIn */
+const faders=document.querySelectorAll('.fadeIn');
+const appearOptions={threshold:0.3,rootMargin:"0px 0px -50px 0px"};
+const appearOnScroll=new IntersectionObserver(function(entries,observer){
+  entries.forEach(entry=>{if(!entry.isIntersecting) return; entry.target.classList.add('visible'); observer.unobserve(entry.target);});
+},appearOptions);
+faders.forEach(fader=>{appearOnScroll.observe(fader);});
+
+/* Hero Parallax Mouse Move */
+const hero=document.querySelector('.hero');
+hero.addEventListener('mousemove',e=>{
+  const x=e.clientX/window.innerWidth;
+  const y=e.clientY/window.innerHeight;
+  document.querySelector('.hero-layer.layer1').style.transform=`translate(${x*30}px,${y*30}px)`;
+  document.querySelector('.hero-layer.layer2').style.transform=`translate(${x*50}px,${y*50}px)`;
+});
+
+/* Card 3D Mouse Move */
+document.querySelectorAll('.cardapio-item').forEach(card=>{
+  card.addEventListener('mousemove',e=>{
+    const rect=card.getBoundingClientRect();
+    const x=e.clientX-rect.left;
+    const y=e.clientY-rect.top;
+    const cx=rect.width/2;
+    const cy=rect.height/2;
+    const dx=(x-cx)/cx*15;
+    const dy=(cy-y)/cy*15;
+    card.style.transform=`rotateY(${dx}deg) rotateX(${dy}deg) scale(1.1)`;
+  });
+  card.addEventListener('mouseleave',()=>{card.style.transform='rotateY(0deg) rotateX(0deg) scale(1)';});
 });
 </script>
-
-
-
-  <!-- Hero -->
-  <section class="hero">
-    <div class="hero-content">
-      <h1>Gomes Rangel</h1>
-      <p>Uma experiência gastronômica irreais</p>
-    </div>
-  </section>
-
-  <!-- Sobre -->
-  <section class="sobre" id="sobre">
-    <img src="https://images.unsplash.com/photo-1555992336-03a23c8d5e82?auto=format&fit=crop&w=800&q=80" alt="Restaurante">
-    <div class="sobre-text fadeIn">
-      <h2>Sobre Nós</h2>
-      <p>O Restaurante Gomes Rangel oferece uma experiência gastronômica única com pratos criativos e ambiente futurista. Venha sentir o sabor da inovação!</p>
-    </div>
-  </section>
-
-  <!-- Cardápio -->
-  <section class="cardapio" id="cardapio">
-    <div class="cardapio-item">
-      <img src="https://images.unsplash.com/photo-1600891964599-f61ba0e24092?auto=format&fit=crop&w=400&q=80" alt="">
-      <h3>Prato 1</h3>
-      <p>Descrição do prato incrível e saboroso.</p>
-    </div>
-    <div class="cardapio-item">
-      <img src="https://images.unsplash.com/photo-1598514982913-04398e3a2b06?auto=format&fit=crop&w=400&q=80" alt="">
-      <h3>Prato 2</h3>
-      <p>Uma explosão de sabores em cada mordida.</p>
-    </div>
-    <div class="cardapio-item">
-      <img src="https://images.unsplash.com/photo-1543352634-8f3d48585c9e?auto=format&fit=crop&w=400&q=80" alt="">
-      <h3>Prato 3</h3>
-      <p>Experiência gastronômica inesquecível.</p>
-    </div>
-  </section>
-
-  <!-- Galeria -->
-  <section class="galeria" id="galeria">
-    <img src="https://images.unsplash.com/photo-1504674900247-0877df9cc836?auto=format&fit=crop&w=800&q=80" alt="">
-    <img src="https://images.unsplash.com/photo-1529692236671-f1a7466d1952?auto=format&fit=crop&w=800&q=80" alt="">
-    <img src="https://images.unsplash.com/photo-1504674900247-0877df9cc836?auto=format&fit=crop&w=800&q=80" alt="">
-  </section>
-
-  <!-- Contato -->
-  <section class="contato" id="contato">
-    <div class="contato-form fadeIn">
-      <h2>Faça sua Reserva</h2>
-      <input type="text" placeholder="Seu Nome">
-      <input type="email" placeholder="Seu Email">
-      <input type="tel" placeholder="Telefone">
-      <textarea rows="4" placeholder="Mensagem"></textarea>
-      <button>Enviar</button>
-    </div>
-  </section>
-
-  <!-- Rodapé -->
-  <footer>
-    <p>© 2025 Gomes Rangel</p>
-    <div class="socials">
-      <a href="#"><i class="fab fa-facebook-f"></i></a>
-      <a href="#"><i class="fab fa-instagram"></i></a>
-      <a href="#"><i class="fab fa-twitter"></i></a>
-    </div>
-  </footer>
-
-  <!-- JS -->
-  <script>
-    // Header Scroll Effect
-    const header = document.getElementById('header');
-    window.addEventListener('scroll', () => {
-      if(window.scrollY > 50) header.classList.add('scrolled');
-      else header.classList.remove('scrolled');
-    });
-
-    // Scroll FadeIn
-    const faders = document.querySelectorAll('.fadeIn');
-    const appearOptions = { threshold: 0.3, rootMargin: "0px 0px -50px 0px" };
-    const appearOnScroll = new IntersectionObserver(function(entries, observer){
-      entries.forEach(entry => {
-        if(!entry.isIntersecting) return;
-        entry.target.classList.add('visible');
-        observer.unobserve(entry.target);
-      });
-    }, appearOptions);
-    faders.forEach(fader => { appearOnScroll.observe(fader); });
-  </script>
-
 </body>
 </html>
